@@ -8,9 +8,6 @@ import responseMessage from '../constant/responseMessage'
 export default {
     self: (req: Request, res: Response, next: NextFunction) => {
         try {
-            console.log('here')
-            console.log('heureu')
-            console.log('adede the code')
             httpResponse(res, 200, responseMessage.SUCCESS)
         } catch (error) {
             httpError(next, error, req, 500)

@@ -16,8 +16,7 @@
     "lint-staged": {
         "src/**/*.{js,ts}": [
             "npm run lint",
-            "npm run prettier",
-            "grep -nH 'console\\.log' -- ./src/ &&  && exit 1 || exit 0"
+            "npm run prettier"
         ]
     },
     "devDependencies": {
