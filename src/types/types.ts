@@ -1,3 +1,4 @@
+// Exporting Type
 export type HttpErrorType = {
     success: boolean
     status: number
@@ -10,6 +11,7 @@ export type HttpErrorType = {
     trace?: string | null
 }
 
+// Exporting Type
 export type HttpResponseType = {
     success: boolean
     status: number

@@ -1,9 +1,11 @@
+// Dependencies
 import env from '../constant/env'
 import config from '../config/config'
 import { HttpErrorType } from '../types/types'
 import { NextFunction, Request } from 'express'
 import responseMessage from '../constant/responseMessage'
 
+// Exporting Module
 export default (nextFunc: NextFunction, err: Error | unknown, req: Request, errorStatus: number = 500): void => {
     const errorObj: HttpErrorType = {
         success: false,

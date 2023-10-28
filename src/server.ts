@@ -31,6 +31,7 @@ app.use((req: Request, _: Response, next: NextFunction) => {
 })
 
 // Global Error Handler
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: HttpErrorType, _: Request, res: Response, __: NextFunction) => {
     logger.error(`CONTROLLER_ERROR`, {
         meta: err
