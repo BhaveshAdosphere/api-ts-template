@@ -15,9 +15,10 @@
     "license": "ISC",
     "lint-staged": {
         "src/**/*.{js,ts}": [
+            "git add .",
             "npm run lint",
-            "grep -nH 'console\\.log' -- ./src/ && exit 1 || exit 0",
-            "npm run prettier"
+            "npm run prettier",
+            "grep -nH 'console\\.log' -- ./src/ && exit 1 || exit 0"
         ]
     },
     "devDependencies": {
