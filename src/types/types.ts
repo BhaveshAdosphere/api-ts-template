@@ -9,3 +9,10 @@ export type HttpErrorType = {
     data: null
     trace?: string | null
 }
+
+export type HttpResponseType = {
+    success: boolean
+    status: number
+    message: string
+    data: unknown
+}

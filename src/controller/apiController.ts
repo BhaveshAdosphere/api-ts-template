@@ -1,5 +1,6 @@
 // Dependencies
 import httpError from '../util/httpError'
+import httpResponse from '../util/httpResponse'
 import { Request, Response, NextFunction } from 'express'
 import responseMessage from '../constant/responseMessage'
 
@@ -7,16 +8,9 @@ import responseMessage from '../constant/responseMessage'
 export default {
     self: (req: Request, res: Response, next: NextFunction) => {
         try {
-            const response = {
-                success: true,
-                status: 200,
-                message: responseMessage.SUCCESS,
-                data: null
-            }
-
-            res.status(response.status).json(response)
+            httpResponse(res, 200, responseMessage.SUCCESS)
         } catch (error) {
-            next(httpError(error, req, 500))
+            httpError(next, error, req, 500)
         }
     }
 }
