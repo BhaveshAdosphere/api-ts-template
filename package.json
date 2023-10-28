@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "build": "npx tsc",
-        "start": "SET cross-env NODE_ENV=production && nodemon dist/server.js",
+        "start": "npm run build && SET cross-env NODE_ENV=production && node dist/server.js",
         "dev": "SET cross-env NODE_ENV=development && nodemon src/server.ts"
     },
     "keywords": [],

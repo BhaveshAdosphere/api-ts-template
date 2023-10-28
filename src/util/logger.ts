@@ -1,5 +1,6 @@
 // Dependencies
 import path from 'path'
+import env from '../constant/env'
 import config from '../config/config'
 import { createLogger, transports, format } from 'winston'
 
@@ -18,7 +19,7 @@ export default createLogger({
             level: 'info',
             format: format.combine(format.timestamp(), customLogFormat)
         }),
-        ...(config.ENV === 'development'
+        ...(config.ENV === env.DEVELOPMENT
             ? [
                   new transports.Console({
                       level: 'info',
