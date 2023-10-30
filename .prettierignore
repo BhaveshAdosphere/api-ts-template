@@ -2,3 +2,5 @@
 .prettierrc
 package-lock.json
 package.json
+dist
+.husky

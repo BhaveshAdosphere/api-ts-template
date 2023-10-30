@@ -4,20 +4,22 @@
     "description": "api starter template",
     "main": "index.js",
     "scripts": {
-        "prettier": "prettier --write src/.",
-        "lint": "eslint src/.",
+        "format:check": "prettier . --check",
+        "format:fix": "prettier . --write",
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix",
         "build": "npx tsc",
         "start": "npm run build && SET cross-env NODE_ENV=production && node dist/server.js",
-        "dev": "SET cross-env NODE_ENV=development && nodemon src/server.ts"
+        "dev": "SET cross-env NODE_ENV=development && nodemon src/server.ts",
+        "prepare": "husky install"
     },
     "keywords": [],
     "author": "adosphere",
     "license": "ISC",
     "lint-staged": {
-        "src/**/*.{js,ts}": [
-            "npm run lint",
-            "npm run prettier",
-            "grep -nH 'console\\.log' -- ./src/ &&  && exit 1 || exit 0"
+        "*.ts": [
+            "npm run lint:fix",
+            "npm run format:fix"
         ]
     },
     "devDependencies": {
