@@ -47,7 +47,23 @@ const consoleLogFormat = format.printf((info) => {
 
 const fileLogFormat = format.printf((info) => {
     const { level, message, timestamp, meta = {} } = info
-    const logData = { level: level.toUpperCase(), message, timestamp, meta }
+
+    // Meta for file log
+    const logMeta: Record<string, unknown> = {}
+
+    for (const [key, value] of Object.entries(meta)) {
+        if (value instanceof Error) {
+            logMeta[key] = {
+                name: value.name,
+                message: value.message,
+                trace: value.stack || ''
+            }
+        } else {
+            logMeta[key] = value
+        }
+    }
+
+    const logData = { level: level.toUpperCase(), message, timestamp, meta: logMeta }
     return JSON.stringify(logData, null, 4)
 })
 

@@ -45,6 +45,34 @@ app.use((err: THttpError, _: Request, res: Response, __: NextFunction) => {
     res.status(err.status).json(err)
 })
 
+// Uncaught Exception
+process.on('uncaughtException', (error) => {
+    logger.error(`UNCAUGHT_EXCEPTION`, { meta: error })
+    // Perform cleanup tasks here, e.g. close database connections
+    process.exit(1)
+})
+
+// Unhandled Rejection
+process.on('unhandledRejection', (reason) => {
+    logger.error(`UNHANDLED_REJECTION`, { meta: { reason } })
+    // Perform cleanup tasks here, e.g. close database connections
+    process.exit(1)
+})
+
+// Graceful shutdown on SIGTERM
+process.on('SIGTERM', () => {
+    logger.info(`SIGTERM`)
+    // Perform cleanup tasks here, e.g. close database connections
+    process.exit(0)
+})
+
+// Graceful shutdown on SIGINT
+process.on('SIGINT', () => {
+    logger.info(`SIGINT`)
+    // Perform cleanup tasks here, e.g. close database connections
+    process.exit(0)
+})
+
 // Listening on port
 const server = app.listen(config.PORT)
 
@@ -61,7 +89,10 @@ const server = app.listen(config.PORT)
         server.close((err) => {
             if (err) {
                 logger.error(`APPLICATION_TERMINATED`, { meta: err })
+            } else {
+                logger.error(`APPLICATION_TERMINATED`)
             }
+
             process.exit(err ? 1 : 0)
         })
     }
