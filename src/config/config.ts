@@ -1,18 +1,20 @@
 // Dependencies
 import path from 'path'
 import dotenv from 'dotenv'
-import env from '../constant/env'
+import { EEnvironment } from '../constant/application'
 
 // Fetching Configs
 dotenv.config({
     path:
-        process.env['cross-env NODE_ENV']?.trim() === env.DEVELOPMENT
+        process.env['NODE_ENV']?.trim() === EEnvironment.DEVELOPMENT
             ? path.join(__dirname, '../', '../', '.env.development')
             : path.join(__dirname, '../', '../', '.env.production')
 })
 
 // Exporting Module
 export default {
-    ENV: process.env.ENV,
-    PORT: process.env.PORT
-}
+    // General
+    ENV: process.env.ENV || EEnvironment.DEVELOPMENT,
+    PORT: process.env.PORT || 3000,
+    SERVER_URL: process.env.SERVER_URL || ''
+} as const

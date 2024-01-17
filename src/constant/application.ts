@@ -1,8 +1,5 @@
 // Enum
-enum Env {
+export enum EEnvironment {
     DEVELOPMENT = 'development',
     PRODUCTION = 'production'
 }
-
-// Exporting Module
-export default Env

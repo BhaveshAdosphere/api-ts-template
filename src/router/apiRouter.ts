@@ -6,7 +6,8 @@ import apiController from '../controller/apiController'
 const router = Router()
 
 // Routes
-router.route('/').get(apiController.self)
+router.route('/self').get(apiController.self)
+router.route('/health').get(apiController.health)
 
 // Exporting Router
 export default router
