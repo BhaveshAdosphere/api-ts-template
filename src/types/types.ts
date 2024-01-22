@@ -24,11 +24,3 @@ export type THttpResponse = {
     message: string
     data: unknown
 }
-
-// Exporting Type
-export type HttpResponseType = {
-    success: boolean
-    status: number
-    message: string
-    data: unknown
-}
