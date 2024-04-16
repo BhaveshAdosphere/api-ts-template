@@ -34,15 +34,19 @@ app.use((req: Request, _: Response, next: NextFunction) => {
 // Global Error Handler
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 app.use((err: THttpError, _: Request, res: Response, __: NextFunction) => {
+    const errorClone = JSON.parse(JSON.stringify(err))
+
     logger.error(`CONTROLLER_ERROR`, {
         meta: err
     })
 
     if (config.ENV === EEnvironment.PRODUCTION) {
-        delete err.trace
+        if (errorClone.trace) {
+            delete errorClone.trace
+        }
     }
 
-    res.status(err.status).json(err)
+    res.status(errorClone.status || 500).json(errorClone)
 })
 
 // Uncaught Exception
