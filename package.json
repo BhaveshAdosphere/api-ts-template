@@ -6,7 +6,8 @@
     "scripts": {
         "build": "npx tsc",
         "clean:build": "rm -rf dist",
-        "dev": "cross-env NODE_ENV=development nodemon src/server.ts",
+        "ts:compile": "tsc --noEmit",
+        "dev": "npm run ts:compile && cross-env NODE_ENV=development nodemon src/server.ts",
         "format:check": "prettier . --check",
         "format:fix": "prettier . --write",
         "lint": "eslint .",
@@ -48,6 +49,6 @@
         "winston": "^3.13.0"
     },
     "engines": {
-        "node": "20.x"
+        "node": ">=20.x"
     }
 }

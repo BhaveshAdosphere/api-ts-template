@@ -2,7 +2,7 @@
 import os from 'os'
 import util from 'util'
 import moment from 'moment'
-import config from '../config/config'
+import appConfig from '../config/appConfig'
 
 export default {
     // Advanced Console Log
@@ -16,7 +16,7 @@ export default {
     },
     getApplicationHealth: () => {
         return {
-            environment: config.ENV,
+            environment: appConfig.ENV,
             uptime: `${process.uptime().toFixed(2)} Second`,
             memoryUsage: {
                 heapTotal: `${(process.memoryUsage().heapTotal / 1024 / 1024).toFixed(2)} MB`,

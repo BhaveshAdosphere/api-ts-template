@@ -1,7 +1,7 @@
 // Dependencies
 import path from 'path'
 import util from 'util'
-import config from '../config/config'
+import appConfig from '../config/appConfig'
 import { EEnvironment } from '../constant/application'
 import * as sourceMapSupport from 'source-map-support'
 import { createLogger, transports, format } from 'winston'
@@ -68,7 +68,7 @@ const fileLogFormat = format.printf((info) => {
 })
 
 const consoleTransports = (): Array<ConsoleTransportInstance> => {
-    if (config.ENV === EEnvironment.DEVELOPMENT) {
+    if (appConfig.ENV === EEnvironment.DEVELOPMENT) {
         return [
             new transports.Console({
                 level: 'info',
@@ -87,7 +87,7 @@ export default createLogger({
     },
     transports: [
         new transports.File({
-            filename: path.join(__dirname, '../', '../', 'logs', `${config.ENV}.log`),
+            filename: path.join(__dirname, '../', '../', 'logs', `${appConfig.ENV}.log`),
             level: 'info',
             format: format.combine(format.timestamp(), fileLogFormat)
         }),

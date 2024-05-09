@@ -1,12 +1,11 @@
 // Dependencies
 import path from 'path'
 import logger from './util/logger'
-import config from './config/config'
+import router from './router/router'
 import httpError from './util/httpError'
-import apiRouter from './router/apiRouter'
-import { THttpError } from './types/types'
-import { EEnvironment } from './constant/application'
+import appConfig from './config/appConfig'
 import responseMessage from './constant/responseMessage'
+import globalErrorHandler from './middleware/globalErrorHandler'
 import express, { Application, Request, Response, NextFunction } from 'express'
 
 // Defining Application
@@ -20,7 +19,7 @@ app.use(express.json())
 app.use(express.static(path.join(__dirname, '../', 'public')))
 
 // Router
-app.use('/api/v1', apiRouter)
+app.use('/api/v1', router)
 
 // 404 - Route Not Found
 app.use((req: Request, _: Response, next: NextFunction) => {
@@ -32,22 +31,7 @@ app.use((req: Request, _: Response, next: NextFunction) => {
 })
 
 // Global Error Handler
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-app.use((err: THttpError, _: Request, res: Response, __: NextFunction) => {
-    const errorClone = JSON.parse(JSON.stringify(err))
-
-    logger.error(`CONTROLLER_ERROR`, {
-        meta: err
-    })
-
-    if (config.ENV === EEnvironment.PRODUCTION) {
-        if (errorClone.trace) {
-            delete errorClone.trace
-        }
-    }
-
-    res.status(errorClone.status || 500).json(errorClone)
-})
+app.use(globalErrorHandler)
 
 // Uncaught Exception
 process.on('uncaughtException', (error) => {
@@ -78,18 +62,20 @@ process.on('SIGINT', () => {
 })
 
 // Listening on port
-const server = app.listen(config.PORT)
+const server = app.listen(appConfig.PORT)
 
 // Driver
 ;(async () => {
     try {
         logger.info(`APPLICATION_STARTED`, {
             meta: {
-                server_url: config.SERVER_URL,
-                port: config.PORT
+                server_url: appConfig.SERVER_URL,
+                port: appConfig.PORT
             }
         })
     } catch (error: unknown) {
+        logger.error(`APPLICATION_TERMINATED`, { meta: error })
+
         server.close((err) => {
             if (err) {
                 logger.error(`APPLICATION_TERMINATED`, { meta: err })

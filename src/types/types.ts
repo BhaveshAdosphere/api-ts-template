@@ -1,10 +1,12 @@
+import { EEnvironment } from '../constant/application'
+
 // Exporting Type (Http Error)
 export type THttpError = {
     success: boolean
     status: number
     request: {
         method: string
-        ip: string | undefined
+        ip?: string | undefined
         url: string
     }
     message: string
@@ -18,9 +20,18 @@ export type THttpResponse = {
     status: number
     request: {
         method: string
-        ip: string | undefined
+        ip?: string | undefined
         url: string
     }
     message: string
     data: unknown
+}
+
+// App Config
+export interface AppConfig {
+    ENV: EEnvironment
+    PORT: number
+    SERVER_URL: string
+    SERVER_DOMAIN: string
+    HEALTH_TOKEN: string
 }
